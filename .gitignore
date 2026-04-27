@@ -9,5 +9,7 @@ out
 
 # to keep own MD notes local. If needed, manually add exceptions below
 *.md
-!README.md 
+!README.md
+!AGENTS.md
+!mods/**/*.md
 

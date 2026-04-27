@@ -174,6 +174,25 @@ dotnet $CRYBAR bar export "$GAME_ROOT/data/UIResources.bar" "<entry-path>" -o /t
 - Mod folder names with spaces or non-ASCII characters — sometimes silently ignored.
 - Editing files inside `mods/subscribed/` — those get overwritten on Workshop sync. Always work in `mods/local/`.
 
+## Repo workflow — `mods/` directory + `install-mods.sh`
+
+Mod source lives under this repo's `mods/<mod-name>/` so it gets git history. The `install-mods.sh` script symlinks each `mods/<name>/` into `<MODS_DIR>/<name>`, which means edits in the repo are picked up live by the game on next launch — no copy step.
+
+```bash
+./install-mods.sh              # symlink all mods/*/ (skip pre-existing real dirs)
+./install-mods.sh --force      # replace real dirs / wrong-target symlinks with our symlinks
+./install-mods.sh --copy       # copy contents instead of symlinking (snapshot install)
+./install-mods.sh --list       # show what's currently installed and where it points
+./install-mods.sh --uninstall  # remove only the symlinks pointing back into this repo
+```
+
+The script autodetects `MODS_DIR` from `~/.local/share/Steam` or `~/.steam/steam` for app id `1934680`, picking the first Steam-id subfolder it finds. Override with `--mods-dir <path>` or `MODS_DIR=...` if needed.
+
+To create a new mod from an agent:
+1. `mkdir -p mods/<new-mod-name>/data/...` and write the additive files
+2. `./install-mods.sh` to link it into the game's local mods folder
+3. Enable in-game (Mods → Local) and verify
+
 ## Worked example (already on disk)
 
-`tier1-rename-test` exists in `mods/local/` as a minimal end-to-end example: a single `data/strings/English/stringmods.txt` that renames Hoplite/Hypaspist/Toxotes. Use it as a template for new string mods.
+`mods/tier1-rename-test/` is a minimal end-to-end example: a single `data/strings/English/stringmods.txt` that renames Hoplite/Hypaspist/Toxotes. Use it as a template for new string mods.

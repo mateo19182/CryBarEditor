@@ -1,0 +1,6 @@
+// tier1-rename-test — flavor rename of a few Greek units to verify the mod pipeline.
+// Override syntax matches the base string_table.txt format.
+
+ID = "STR_UNIT_HOPLITE_NAME"   ;   Str = "Spartan Hoplite"
+ID = "STR_UNIT_HYPASPIST_NAME"   ;   Str = "Macedonian Hypaspist"
+ID = "STR_UNIT_TOXOTES_NAME"   ;   Str = "Cretan Toxotes"
